@@ -7,8 +7,8 @@ import (
 )
 
 func fakeResponse(w http.ResponseWriter, r *http.Request) {
-	log.Print("Alert revieved")
-	fmt.Fprintf(w, "Fake Alerte")
+	log.Print("Alert reveived")
+	fmt.Fprintf(w, "Fake Alert")
 }
 
 func main() {
