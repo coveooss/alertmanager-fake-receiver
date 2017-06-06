@@ -1,0 +1,43 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: fake-alert-reciever
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: alertmanager
+        service: fake-alert-reciever
+    spec:
+      containers:
+      - name: fake-alert-reciever
+        image: coveo/alertmanager-fake-reciever
+        ports:
+        - name: web
+          containerPort: 80
+        resources:
+          requests:
+            memory: 10Mi
+            cpu: 0.01
+          limits:
+            memory: 10Mi
+            cpu: 0.01
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fake-alert-reciever
+  labels:
+    app: alertmanager
+    service: fake-alert-reciever
+spec:
+  type: NodePort
+  ports:
+  - name: web
+    port: 80
+    protocol: TCP
+    targetPort: web
+  selector:
+    app: alertmanager
+    service: fake-alert-reciever
